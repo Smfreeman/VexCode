@@ -21,8 +21,22 @@
 using namespace vex;
  // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain       Brain;
-vex::motor leftMotor(vex::PORT1);
-vex::motor rightMotor(vex::PORT10);
+vex::motor leftFWheelMotor(vex::PORT1); //These two are for turning (axis 4)
+vex::motor rightFWheelMotor(vex::####);
+
+vex::motor rearSlideWheels(vex::####);  //mainly on for forward movement (axis 3)
+
+vex::motor leftFWheelMotor(vex::####); //These two are for arms up/down (axis 2)
+vex::motor rightFWheelMotor(vex::####);
+
+vex::motor leftFWheelMotor(vex::####); //These two are feed belt (R1 *Top Bumper*)
+vex::motor rightFWheelMotor(vex::####);
+
+
+
+
+//vex::motor rightArmMotor(vex::####);
+
 vex::controller fakeXbox = vex::controller();
 
 int main() {
@@ -30,20 +44,20 @@ int main() {
   vexcodeInit();
   while(1) {
      //grab controller axis values
-     int stickAxis2 = fakeXbox.Axis2.value();
-     int stickAxis1 = fakeXbox.Axis1.value();
+     int stickAxis3 = fakeXbox.Axis3.value();
+     int stickAxis4 = fakeXbox.Axis4.value();
 
      //calculate motor velocity settings
-     int leftVelocity = stickAxis2 + stickAxis1; 
-     int rightVelocity = stickAxis2 - stickAxis1;
+     int leftVelocity = stickAxis3 + stickAxis4; 
+     int rightVelocity = stickAxis3 - stickAxis4;
 
 
      //set velocity
-     leftMotor.setVelocity(leftVelocity, vex::velocityUnits::pct);
-     rightMotor.setVelocity(rightVelocity, vex::velocityUnits::pct);
+     leftFWheelMotor.setVelocity(leftVelocity, vex::velocityUnits::pct);
+     rightFWheelMotor.setVelocity(rightVelocity, vex::velocityUnits::pct);
      //spin
-     leftMotor.spin(vex::directionType::fwd);
-     rightMotor.spin(vex::directionType::rev);
+     leftFWheelMotor.spin(vex::directionType::fwd);
+     rightFWheelMotor.spin(vex::directionType::rev);
 
      //sleep
      vex::task::sleep(20);
