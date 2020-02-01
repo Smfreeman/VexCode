@@ -35,6 +35,7 @@ vex::motor rightFWheelMotor(vex::####);
 
 
 
+//vex::motor leftArmMotor(vex::####);
 //vex::motor rightArmMotor(vex::####);
 
 vex::controller fakeXbox = vex::controller();
