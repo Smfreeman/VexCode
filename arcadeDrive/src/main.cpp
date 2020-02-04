@@ -24,17 +24,17 @@ using namespace vex;
  // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain       Brain;
 vex::motor leftFWheelMotor(vex::PORT1); //These two are for turning (axis3 + axis 4)
-vex::motor rightFWheelMotor(vex::####); //(axis3 - axis4)
+vex::motor rightFWheelMotor(vex::PORT2); //(axis3 - axis4)
 
-vex::motor rearSlideWheels(vex::####);  //mainly on for forward movement (axis 3)
+vex::motor rearSlideWheels(vex::PORT3);  //mainly on for forward movement (axis 3)
 
-vex::motor leftArmMotor(vex::####); //These two are for arms up/down (axis 2)
-vex::motor rightArmMotor(vex::####);
+vex::motor leftArmMotor(vex::PORT4); //These two are for arms up/down (axis 2)
+vex::motor rightArmMotor(vex::PORT5);
 
-vex::motor leftBeltMotor(vex::####); //These two are feed belt (R1 *Top Bumper*)
-vex::motor rightBeltMotor(vex::####);
+vex::motor leftBeltMotor(vex::PORT6); //These two are feed belt (R1 *Top Bumper*)
+vex::motor rightBeltMotor(vex::PORT7);
 
-vex::motor dolleyMotor(vex::####);
+vex::motor dolleyMotor(vex::PORT8);
 
 
 int scale(int axisVal){
