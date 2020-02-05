@@ -21,8 +21,7 @@
 #include "cmath"
 
 using namespace vex;
- // A global instance of vex::brain used for printing to the V5 brain screen
-vex::brain       Brain;
+
 vex::motor leftFWheelMotor(vex::PORT1); //These two are for turning (axis3 + axis 4)
 vex::motor rightFWheelMotor(vex::PORT2); //(axis3 - axis4)
 
