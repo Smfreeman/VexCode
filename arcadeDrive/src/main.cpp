@@ -36,15 +36,12 @@ motor rightBeltMotor(PORT7);
 motor dolleyMotor(PORT8);
 
 //Function for scaling down sensitivity of motors to stick at low throw
-int scale(int axisVal){
+int scale(int axisVal) {
   double scaledVal;
   scaledVal = ((double)axisVal * abs(axisVal)) / 100.0;
   int newVal = (int)scaledVal;
   return newVal;
 }
-
-//vex::motor leftArmMotor(vex::####);
-//vex::motor rightArmMotor(vex::####);
 
 controller fakeXbox = controller();
 
@@ -53,26 +50,14 @@ int main() {
   vexcodeInit();
 
   while(1) {
-     //grab controller axis values
-     int stickAxis1 = fakeXbox.Axis1.value();
-     int stickAxis2 = fakeXbox.Axis2.value();
-     int stickAxis3 = fakeXbox.Axis3.value();
-     int stickAxis4 = fakeXbox.Axis4.value();
-     //scale axis values
-     int scaledAxis3 = scale(stickAxis3);
-     int scaledAxis4 = scale(stickAxis4);
-     int scaledAxis2 = scale(stickAxis2);
-     int scaledAxis1 = scale(stickAxis1);
-     //the rest are buttons whose values need not be read in  and stored
-
 //************************************************************
      //calculate drivetrain velocity settings
-     int leftVelocity = (int)((scaledAxis3 + scaledAxis4)*.75); //scaled (.75) for gear ratio to match.
-     int rightVelocity = (int)((scaledAxis3 - scaledAxis4)*.75); //scaled (.75) for gear ratio to match.
-     int rearWheelVelocity = scaledAxis3;
+     int leftVelocity = (int)((fakeXbox.Axis3.value() + fakeXbox.Axis4.value())*.75); //scaled (.75) for gear ratio to match.
+     int rightVelocity = (int)((fakeXbox.Axis3.value() - fakeXbox.Axis4.value())*.75); //scaled (.75) for gear ratio to match.
+     int rearWheelVelocity = fakeXbox.Axis3.value();
      //arm motors velocity - move feed arms up/down
-     int leftArmVelocity = (int)(scaledAxis2 * .50); //scaled (.5) *full power might be too much*
-     int rightArmVelocity = (int)(scaledAxis2 * .50); //scaled (.5) *full power might be too much*
+     int leftArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
+     int rightArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
      
      //if R1 (bumper) is pressed, set velocity for 80%
      //if R2 (bumper) is pressed, set velocity for -80%
