@@ -22,18 +22,18 @@
 
 using namespace vex;
 
-vex::motor leftFWheelMotor(vex::PORT1); //These two are for turning (axis3 + axis 4)
-vex::motor rightFWheelMotor(vex::PORT2); //(axis3 - axis4)
+motor leftFWheelMotor(PORT1); //These two are for turning (axis3 + axis 4)
+motor rightFWheelMotor(PORT2); //(axis3 - axis4)
 
-vex::motor rearSlideWheels(vex::PORT3);  //mainly on for forward movement (axis 3)
+motor rearSlideWheels(PORT3);  // movement (axis 3)
 
-vex::motor leftArmMotor(vex::PORT4); //These two are for arms up/down (axis 2)
-vex::motor rightArmMotor(vex::PORT5);
+motor leftArmMotor(PORT4); //These two are for arms up/down (axis 2)
+motor rightArmMotor(PORT5);
 
-vex::motor leftBeltMotor(vex::PORT6); //These two are feed belt (R1 *Top Bumper*)
-vex::motor rightBeltMotor(vex::PORT7);
+motor leftBeltMotor(PORT6); //These two are feed belt (R1 *Top Bumper*)
+motor rightBeltMotor(PORT7);
 
-vex::motor dolleyMotor(vex::PORT8);
+motor dolleyMotor(PORT8);
 
 //Function for scaling down sensitivity of motors to stick at low throw
 int scale(int axisVal){
@@ -48,12 +48,11 @@ int scale(int axisVal){
 //vex::motor leftArmMotor(vex::####);
 //vex::motor rightArmMotor(vex::####);
 
-vex::controller fakeXbox = vex::controller();
+controller fakeXbox = controller(); 
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
 
   while(1) {
      //grab controller axis values
