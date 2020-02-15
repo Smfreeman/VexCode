@@ -43,12 +43,10 @@ int scale(int axisVal){
   return newVal;
 }
 
-
-
 //vex::motor leftArmMotor(vex::####);
 //vex::motor rightArmMotor(vex::####);
 
-controller fakeXbox = controller(); 
+controller fakeXbox = controller();
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
@@ -56,10 +54,10 @@ int main() {
 
   while(1) {
      //grab controller axis values
+     int stickAxis1 = fakeXbox.Axis1.value();
+     int stickAxis2 = fakeXbox.Axis2.value();
      int stickAxis3 = fakeXbox.Axis3.value();
      int stickAxis4 = fakeXbox.Axis4.value();
-     int stickAxis2 = fakeXbox.Axis2.value();
-     int stickAxis1 = fakeXbox.Axis1.value();
      //scale axis values
      int scaledAxis3 = scale(stickAxis3);
      int scaledAxis4 = scale(stickAxis4);
@@ -94,39 +92,39 @@ int main() {
 //****************************************************************
      //set velocity
     
-     leftFWheelMotor.setVelocity(leftVelocity, vex::velocityUnits::pct);
-     rightFWheelMotor.setVelocity(rightVelocity, vex::velocityUnits::pct);
-     rearSlideWheels.setVelocity(rearWheelVelocity, vex::velocityUnits::pct);
+     leftFWheelMotor.setVelocity(leftVelocity, velocityUnits::pct);
+     rightFWheelMotor.setVelocity(rightVelocity, velocityUnits::pct);
+     rearSlideWheels.setVelocity(rearWheelVelocity, velocityUnits::pct);
      //arms
-     leftArmMotor.setVelocity(leftArmVelocity, vex::velocityUnits::pct);
-     rightArmMotor.setVelocity(rightArmVelocity, vex::velocityUnits::pct);
+     leftArmMotor.setVelocity(leftArmVelocity, velocityUnits::pct);
+     rightArmMotor.setVelocity(rightArmVelocity, velocityUnits::pct);
      //belt
-     leftBeltMotor.setVelocity(beltMotorVelocity, vex::velocityUnits::pct);
-     rightBeltMotor.setVelocity(beltMotorVelocity, vex::velocityUnits::pct);
+     leftBeltMotor.setVelocity(beltMotorVelocity, velocityUnits::pct);
+     rightBeltMotor.setVelocity(beltMotorVelocity, velocityUnits::pct);
 
 //*****************************************************************
      //spin all
      //wheels
-     leftFWheelMotor.spin(vex::directionType::fwd);
-     rightFWheelMotor.spin(vex::directionType::rev);
-     rearSlideWheels.spin(vex::directionType::fwd);
+     leftFWheelMotor.spin(directionType::fwd);
+     rightFWheelMotor.spin(directionType::rev);
+     rearSlideWheels.spin(directionType::fwd);
      //arms
-     leftArmMotor.spin(vex::directionType::fwd);
-     rightArmMotor.spin(vex::directionType::rev);
+     leftArmMotor.spin(directionType::fwd);
+     rightArmMotor.spin(directionType::rev);
      //belt (positive velocity aka R1 should feed in)(negative velocity pushes out.)
-     leftBeltMotor.spin(vex::directionType::fwd);
-     rightBeltMotor.spin(vex::directionType::rev);
+     leftBeltMotor.spin(directionType::fwd);
+     rightBeltMotor.spin(directionType::rev);
 
 //*****************************************************
   //Dolley Event
   int dolleyState = 0;
   if(fakeXbox.ButtonX.pressing()){
-    if(dolleyState == 0){ // moving from down to upright
+    if(dolleyState == 0) { // moving from down to upright
 
-    }else{ //moving from upright to down
-    
     }
-    
+    else { //moving from upright to down
+
+    }
   }
 
 
