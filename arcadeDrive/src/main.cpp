@@ -22,14 +22,14 @@
 
 using namespace vex;
 
-motor leftFWheelMotor(PORT1); //These two are for turning (axis3 + axis 4)
-motor rightFWheelMotor(PORT2); //(axis3 - axis4)
-motor rearSlideWheels(PORT3);  // movement (axis 3)
-motor leftArmMotor(PORT4); //These two are for arms up/down (axis 2)
-motor rightArmMotor(PORT5);
-motor leftBeltMotor(PORT6); //These two are feed belt (R1 *Top Bumper*)
-motor rightBeltMotor(PORT7);
-motor dolleyMotor(PORT8);
+motor leftFWheelMotor(PORT18); //These two are for turning (axis3 + axis 4)
+motor rightFWheelMotor(PORT20); //(axis3 - axis4)
+motor rearSlideWheels(PORT11);  // movement (axis 3)
+motor leftArmMotor(PORT19); //These two are for arms up/down (axis 2)
+motor rightArmMotor(PORT1);
+motor leftBeltMotor(PORT17); //These two are feed belt (R1 *Top Bumper*)
+motor rightBeltMotor(PORT6);
+motor dolleyMotor(PORT5);
 
 //Function for scaling down sensitivity of motors to stick at low throw
 int scale(int axisVal) {
