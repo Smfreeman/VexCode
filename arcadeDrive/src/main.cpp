@@ -40,7 +40,6 @@ int scale(int axisVal) {
 }
 
 controller fakeXbox = controller();
-bool dolleyState = 0;
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
@@ -100,21 +99,22 @@ int main() {
 
 //*****************************************************
   //Dolley Event
+  bool dolleyUp = false; //State 0 -> Dolley is not upright.
 
-  //State 0 -> Dolley is not upright.
     if(fakeXbox.ButtonX.pressing()) {
       //dolleyMotor Speed
       dolleyMotor.setVelocity(50,velocityUnits::rpm);
-      if(dolleyState == 0) { // moving from down -> upright
+      if(dolleyUp == false) { // moving from down -> upright
         dolleyMotor.spin(directionType::fwd);
         vex::task::sleep(3000);
-        dolleyState = 1;
+        dolleyMotor.stop();
+        dolleyUp = true;
       }
     }
     else { //moving from upright -> down
       dolleyMotor.spin(directionType::rev);
       vex::task::sleep(3000);
-      dolleyState = 0;
+      dolleyUp = false;
     }
   }
 }
