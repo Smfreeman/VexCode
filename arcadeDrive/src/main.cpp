@@ -70,16 +70,14 @@ int main() {
     rightBeltMotor.spin(directionType::fwd);
     leftBeltMotor.spin(directionType::fwd);
 
-//****************************************************************
-    //set velocity
-  
+    //set velocities
     leftFWheelMotor.setVelocity(leftVelocity, velocityUnits::pct);
     rightFWheelMotor.setVelocity(rightVelocity, velocityUnits::pct);
     rearSlideWheels.setVelocity(rearWheelVelocity, velocityUnits::pct);
     //arms
     leftArmMotor.setVelocity(leftArmVelocity, velocityUnits::pct);
     rightArmMotor.setVelocity(rightArmVelocity, velocityUnits::pct);
-//*****************************************************************
+
     //spin all
     // wheels
     leftFWheelMotor.spin(directionType::fwd);
@@ -89,13 +87,24 @@ int main() {
     leftArmMotor.spin(directionType::fwd);
     rightArmMotor.spin(directionType::rev);
 
-//*****************************************************
     //Dolley Event
     if (fakeXbox.ButtonUp.pressing())
       dolleyMotor.spin(directionType::fwd);
     if (fakeXbox.ButtonDown.pressing())
       dolleyMotor.spin(directionType::rev);
+
+    // calibrate arms
+    double angle = 0; // initialize common angle for both motors
+    if (fakeXbox.Axis2.value() >= 30) angle = angle + 5;
+    else if (fakeXbox.Axis2.value() >= 30) angle = angle - 5;
+    
+    // restrict angle value
+    if (angle >= 90) angle = 90;
+    if (angle <= 0) angle = 0;
+
+    // set motor rotations
+    rightArmMotor.setRotation(angle, rotationUnits::deg);
+    leftArmMotor.setRotation(angle, rotationUnits::deg);
   
   } // end while loop
-
 } // end main loop
