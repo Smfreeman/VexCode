@@ -42,17 +42,18 @@ int scale(int axisVal) {
 controller fakeXbox = controller();
 
 int main() {
+  rightArmMotor.setMaxTorque(100, percentUnits::pct);
+  leftArmMotor.setMaxTorque(100, percentUnits::pct);
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  double angle = 0; // initialize common angle for both motors
+  bool xflag = false;
   while(1) {
 //************************************************************
     //calculate drivetrain velocity settings
     int leftVelocity = (int)((fakeXbox.Axis3.value() + fakeXbox.Axis4.value())*.75); //scaled (.75) for gear ratio to match.
     int rightVelocity = (int)((fakeXbox.Axis3.value() - fakeXbox.Axis4.value())*.75); //scaled (.75) for gear ratio to match.
     int rearWheelVelocity = fakeXbox.Axis3.value();
-    //arm motors velocity - move feed arms up/down
-    int leftArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
-    int rightArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
     
     // belt motor
     if(fakeXbox.ButtonR1.pressing() || fakeXbox.ButtonR2.pressing()) {
@@ -74,9 +75,6 @@ int main() {
     leftFWheelMotor.setVelocity(leftVelocity, velocityUnits::pct);
     rightFWheelMotor.setVelocity(rightVelocity, velocityUnits::pct);
     rearSlideWheels.setVelocity(rearWheelVelocity, velocityUnits::pct);
-    //arms
-    leftArmMotor.setVelocity(leftArmVelocity, velocityUnits::pct);
-    rightArmMotor.setVelocity(rightArmVelocity, velocityUnits::pct);
 
     //spin all
     // wheels
@@ -93,18 +91,18 @@ int main() {
     if (fakeXbox.ButtonDown.pressing())
       dolleyMotor.spin(directionType::rev);
 
-    // calibrate arms
-    double angle = 0; // initialize common angle for both motors
-    if (fakeXbox.Axis2.value() >= 30) angle = angle + 5;
-    else if (fakeXbox.Axis2.value() >= 30) angle = angle - 5;
+    // if (fakeXbox.Axis2.position() >= 30) angle = angle + 5;
+    // else if (fakeXbox.Axis2.position() <= -30) angle = angle - 5;
     
-    // restrict angle value
-    if (angle >= 90) angle = 90;
-    if (angle <= 0) angle = 0;
+    // // restrict angle value
+    // if (angle > 500) angle = 500;
+    // if (angle < 0) angle = 0;
 
     // set motor rotations
-    rightArmMotor.setRotation(angle, rotationUnits::deg);
-    leftArmMotor.setRotation(angle, rotationUnits::deg);
-  
+    if (fakeXbox.ButtonX.pressing()) xflag = true;
+    if (xflag) {
+      rightArmMotor.rotateTo(90, rotationUnits::deg, true);
+      leftArmMotor.rotateTo(90, rotationUnits::deg, true);
+    }
   } // end while loop
 } // end main loop
