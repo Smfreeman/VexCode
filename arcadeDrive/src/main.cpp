@@ -53,24 +53,23 @@ int main() {
     //arm motors velocity - move feed arms up/down
     int leftArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
     int rightArmVelocity = (int)(fakeXbox.Axis2.value() * 1/2); //scaled (.5) *full power might be too much*
-     
-    //if R1 (bumper) is pressed, set velocity for 80%
-    //if R2 (bumper) is pressed, set velocity for -80%
-    int beltMotorVelocity = 0;
-    if(fakeXbox.ButtonR1.pressing()) {
-      beltMotorVelocity = 80;
+    
+    // belt motor
+    if(fakeXbox.ButtonR1.pressing() || fakeXbox.ButtonR2.pressing()) {
+      leftBeltMotor.setVelocity(80, velocityUnits::pct);
+      rightBeltMotor.setVelocity(-80, velocityUnits::pct);
     }
-    else if(fakeXbox.ButtonR2.pressing()) {
-      beltMotorVelocity = -80;
+    else if(fakeXbox.ButtonL1.pressing() || fakeXbox.ButtonL2.pressing()) {
+      leftBeltMotor.setVelocity(-80, velocityUnits::pct);
+      rightBeltMotor.setVelocity(80, velocityUnits::pct);
     }
-    //if L1 (bumper) is pressed, set velocity for on
-    //if L2 (bumper) is pressed, set velocity for on
-    if(fakeXbox.ButtonL1.pressing()) {
-      beltMotorVelocity = 0;
+    else if(!fakeXbox.ButtonR1.pressing() && !fakeXbox.ButtonR2.pressing() && !fakeXbox.ButtonL1.pressing() && !fakeXbox.ButtonL2.pressing()) {
+      leftBeltMotor.setVelocity(0, velocityUnits::pct);
+      rightBeltMotor.setVelocity(0, velocityUnits::pct);
     }
-    else if(fakeXbox.ButtonL2.pressing()) {
-      beltMotorVelocity = 0;
-    }
+    rightBeltMotor.spin(directionType::fwd);
+    leftBeltMotor.spin(directionType::fwd);
+
 //****************************************************************
     //set velocity
   
@@ -80,41 +79,23 @@ int main() {
     //arms
     leftArmMotor.setVelocity(leftArmVelocity, velocityUnits::pct);
     rightArmMotor.setVelocity(rightArmVelocity, velocityUnits::pct);
-    //belt
-    leftBeltMotor.setVelocity(beltMotorVelocity, velocityUnits::pct);
-    rightBeltMotor.setVelocity(beltMotorVelocity, velocityUnits::pct);
-
 //*****************************************************************
     //spin all
-    //wheels
+    // wheels
     leftFWheelMotor.spin(directionType::fwd);
     rightFWheelMotor.spin(directionType::rev);
     rearSlideWheels.spin(directionType::fwd);
     //arms
     leftArmMotor.spin(directionType::fwd);
     rightArmMotor.spin(directionType::rev);
-    //belt (positive velocity aka R1 should feed in)(negative velocity pushes out.)
-    leftBeltMotor.spin(directionType::fwd);
-    rightBeltMotor.spin(directionType::rev);
 
 //*****************************************************
-  //Dolley Event
-  bool dolleyUp = false; //State 0 -> Dolley is not upright.
-
-    if(fakeXbox.ButtonX.pressing()) {
-      //dolleyMotor Speed
-      dolleyMotor.setVelocity(50,velocityUnits::rpm);
-      if(dolleyUp == false) { // moving from down -> upright
-        dolleyMotor.spin(directionType::fwd);
-        vex::task::sleep(3000);
-        dolleyMotor.stop();
-        dolleyUp = true;
-      }
-    }
-    else { //moving from upright -> down
+    //Dolley Event
+    if (fakeXbox.ButtonUp.pressing())
+      dolleyMotor.spin(directionType::fwd);
+    if (fakeXbox.ButtonDown.pressing())
       dolleyMotor.spin(directionType::rev);
-      vex::task::sleep(3000);
-      dolleyUp = false;
-    }
-  }
-}
+  
+  } // end while loop
+
+} // end main loop
